@@ -1,0 +1,146 @@
+Mutli-variable for loop
+
+for(i = 0, j = 0; i <= 5; i++);
+
+* Condition can be eliminated from the loop but then it will become an infinte loop ( for(;;) )
+
+for( i= 0 , j = 0 ; i<5,j<3; i++ , j++); //this will execute till the second condition becomes false
+
+* For two conditions to be considered you can use - i<5 & j <3
+
+for( i = 1, j = 0; i<5 , j<= 6; i++, j++);
+{
+	printf("%d %d \n ",i,j);
+} 
+ //will print 8 7. Loop keeps on executeing till 7 6 then after loop finishes incremented
+ //once more making it 8 7.
+
+While loops  (Entery control loops)
+
+void main(){
+	int i = 1;
+	while(i = 1){  // 1  => true 
+	printf("%d",i);
+	++i;
+	}
+	printf("End of Program");
+	getch();
+}
+
+     First the loop condition is true hence it enters it body and runs and then again the condition is checked since it an assignment operator it also becomes true eeven though i becomes 2 when ++i is ran (infinite loop)
+
+void main(){
+	int i = 10;
+	while(i){  // 1 or anything other thn 0 => true 
+	printf("%d",i);
+	++i;
+	}
+	printf("End of Program");
+	getch();
+}
+      
+     This is not an infinte loop cause at one time it will print 32767 then -32768 , -32767, -32766 till -1 . Then 0 comes at where the loop ends.
+
+int i = 0;
+while(i++) // condition does not satisfy
+while(++i) // condition satisfies
+
+
+void main(){
+
+	char ch = 'a';
+	while(ch){
+	printf("%d",ch);
+	ch++;
+	}
+	getch():
+}
+     This is not an infinte loop cause at one time it will print 127 then -128 , -127, -126 till -1 . Then 0 comes at where the loop ends.
+
+do while loop ( Exit control loops )
+
+do {
+	statment;
+}while(condition);
+
+     The body of the do-while loop will be executed atleast once without checking any condition.
+
+break statements in C
+
+int a,i,sum=0;
+
+for(i=0;i<=5;i++){
+	printf("Enter a number");
+	scanf("%d",a);
+	if(a<0){
+	break;     // if the number entered is <0 then the control flow will be thrown out of the loop (no other iteration will be entertained beyond this point)
+	}
+    sum = sum + a
+}
+printf("%d",sum);
+
+continue statements in C
+
+for(){
+	s1;
+	s2;
+	continue; // control flow  goes to the next iteration of the loop (remaining s3,s4 are skipped)
+	s3;
+	s4;
+}
+
+Nested loops in C
+
+Array in C
+
+int a[2+2];  //a[4]
+int a[3*2];  //a[6]
+int a[11/2]; //a[5] (converts to int)
+int a[0]; //not allowed in c (undefined behaviour)
+ 
+Compile time Initialisation (static initialization)
+
+int a[5] ={0,1,2,3,4};
+int a[] = {0,1,2,3,4};
+int a[5] = {0,1,2};  // a[5] = {0,1,2,0,0};
+int a[5]; //grabage value
+int a[5]= {} //error
+char b[10] = {'j','e','n','n','y',null,null,null,null,null};
+
+Run time Initialisation 
+
+int a[5];
+for(int i = 0;i<5;i++){
+	scanf("%d",&a[i]);
+}
+
+int a[5] = { 1,10,0,-1,3};
+
+Now 'a' stores the starting address of '1' (base address of the array)
+
+Any variable that stores the address of any other variable is known as pointer variable.
+* Base address + index * (size of datatype) -> To find the address of a certain element 
+
+* There is no bound checking of array in C [ if an array of size 10 is declared accessing a[11] will return 
+garbage values]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

