@@ -125,6 +125,352 @@ Any variable that stores the address of any other variable is known as pointer v
 garbage values]
 
 
+2D array:
+  
+datatype nameofarray[row][column]
+
+compile time 
+
+int a[2][3] = {0,0,0,1,1,1};    #row size not mandatory in this type of initialisation
+
+                c1c2c3
+              r1 0 0 0
+              r2 1 1 1
+
+int a[2][3] = {{0,0,0},{1,1,1}};
+
+
+int a[2][3] = {0,0,1,1};
+               
+              0 0 1
+              1 0 0 -> last two by deafult 0
+
+int a[2][3] = {{0,0},{1,1}};
+
+               0 0 0
+               1 1 1  -> last digit of each row is deafult 0
+
+int a[][3] = {0};  // One-D array with 3 0's
+
+
+Run time: nexted loops
+   scanf("%d", &a[i][j]);
+
+Pointers In C (derived Datatype)
+
+Pointers contains address of another variable 
+
+datatype * pointer-name;
+
+int* p, int * p , int *p -> All are same in C
+
+  - Here the datatype of the address of the variable P is storing is Int. The pointer itself does 
+    not come under the integer datatype
+
+int a = 10;
+int* p;
+p = &a; // usage of pointer (address of 'a' stored in pointer p)
+
+int *p =&a ; a = 10 //This is wrong since 'a' is not declared and the pointer will not be pointing to the 
+right address
+
+& - address of op
+* - Indirection op
+
+On a 16bit machine , the size of pointer can be 2 bytes and 
+On a 32bit machine , the size of pointer can be 4 bytes
+
+p = &a, &b;
+* address of 'a' assigned to p cause '=' has higher precedence than ','
+P = (&a,&b); //when in brackets one executed and discarded and second one returned 
+* address of 'b' assigned to p 
+
+Printing value of pointer 
+
+printf("a= %d", *p); // *p will print the value at the address which is stored in p.
+
+Printing hexadecimal address of 'a'
+
+printf("address of a = %x", &a);
+or
+printf("address of a = %x", p);
+
+Pointer Assignment
+
+int  a =10 , b = 11;
+int *p, *q;
+p = &a;         //p has a's address 
+q = p;          //now both p and q is pointing to 'a'
+
+Pointer to Pointer 
+
+int a = 10;
+int *p = &a;
+  -Here a's datatype is int
+int* *q = &p;
+  -Here p's datatype is int* cause its a pointer
+
+printf(" a= %d %d %d", a,*p,**q);
+                             -*q will give value of P and one * will give the value at the value which is 
+                               stored in p
+
+int ** *r = &q; //level can be increase like this 
+    -to access value of 'a' using this three level pointer ***r
+
+ *q = 25; //illegal
+  -Here we are trying to store a integer value at 'p' but the datatype supported is 'int*'
+
+Pointer Arithematics
+
+int *q;
+int a =10;
+int *p = &a;
+p + q; //invalid
+p=p+2 ; //correct
+  Here if 'a''s base address is 1000 then 1000+2 != 1002. Cause when we add 2 it will jump 2 times the 
+  datatype size. 
+  Formula 
+     p + n = 1000 + n * (Size of datatype);
+
+int a[5] = {0,1,-1,10,1};
+int *p = &a[0];
+printf("%d",*p); //prints first element
+
+p = p + 2;
+printf("%d",*p); //prints third element
+
+a = a + 3; //wrong (a is a constant pointer and it will always point to the base address)
+
+Addition - We can not add two pointers 
+
+Subtraction
+
+int d;
+int a[] = {0,1,-1,10,11};  // 0 - 1000 , 1 -  1004 , -1 - 1008, 10 - 1012 , 11 -1016
+int *p = &a[0];
+int *q = &a[3];
+
+d = q - p;
+   //1012 - 1000 = 12 / (datatype) => 12/4 => 3 (3 elements between p and q)
+
+q = q - 2; // 1012 - 2*4 => 1004 (2 positiion backward)
+
+int *p = a; // where a is an array then it is right. Cause a points to the base address of the array
+
+Increment and decrement of Pointers
+
+int a[] = {3,5,8,3,0,7}
+int *p;
+p = a;
+p++;
+printf("%d",*p); //prints second element
+
+printf("%d", *p++) //prints first element
+
+printf("%d", * ++p) //prints second element
+
+printf("%d %d", *p++, *p++) //right to left execution (2 and 3)
+ 
+int a[] = {2,3,67,4,5};
+int* p = &a[2]:
+printf("%d %d %d", *--p, *--p, *--p); //   garbage-val 3 2
+
+Void Pointer
+
+int a = 5;
+void *vp = &a;
+printf("%d", *vp); //wrong (illegal)
+*You can not reference a void pointer 
+
+
+void *vp = &a;
+printf("%d", *(int*)vp); //void pointer can only be referenced after type casting
+                - Type casting into integer pointer
+In the same program,
+char c = 'l';
+vp = &c;
+printf("%d", *(char*)vp); //Same pointer can be used for multiple data types.
+* malloc and calloc returns void pointers
+
+Null Pointer in C
+
+int *ptr = NULL; //makesure after initialisation its not pointing any garbage value
+           -value => 0. It is pointing to 0th memory location which is reserved 
+                        You can not dereference that memory location.
+
+printf("%d", ptr); // return 0
+printf("%d", *ptr); //program crashes (trying to dereference NULL)
+
+Dangling Pointer
+
+int *ptr = (int*)malloc(sizeof(int));
+*ptr = 10;
+printf("%d", *ptr); // 10
+free(ptr); //allocated memory is now freed (deallocation)
+
+After the memory is freed it goes into free memory where 'ptr' is still pointing to
+making it a dangling pointer.
+
+printf("%d", *ptr); //undefined behaviour  
+
+To get rid of a dangling pointer referecne it to NULL
+ptr = NULL;
+
+
+int* func(){
+	int a = 9;
+	return &a;
+}
+void main(){
+	int *ptr = func();// a is a local variable. Hence unpredictable behaviour  or Error
+
+}
+
+
+void main(){
+	int *ptr=NULL;
+	{
+	    int a=5;
+	    ptr=&a;
+	    printf("%d",*ptr); //inside this pointer it will give 5
+	}
+}
+
+Wild Pointer
+
+An uninitialised pointer is called wild pointer
+
+int * ptr; //wild pointer
+
+int *ptr = (int*)malloc(sizeof(int)); // no more a wild pointer
+
+DMA (Dynamic Memory Allocation) - memory allocated at run time -> taken from Heap     |heap|
+                                                                                      |stack|
+-> all local variables and functions take memory from stack
+SMA (Static Memory Allocation)  - memory allocated at compile time                    |global/static| -> golbal variables and static variables take memory here
+                                                                                      |code/text|
+In SMA - memory is fixed ( You can not free this memory at run time or increase or decrease this 
+memory)
+
+* Stack and heap will always grow in opposite direction. If heap is growing towards stack , stack will 
+grow towards heap.
+
+In DMA - memory can be freed and reused 
+
+Dynamic Memory Allocation using malloc()
+
+malloc() -> memory allocation (allocated from heap)
+
+malloc(size) -> 'size' amount of bytes reserved from heap and return base address of this block (a 
+void pointer)(Hence use pointers)
+
+void* malloc(size_t size)  //backend
+              -unsigned int
+
+In some machine int take 4bytes and in some 2bytes so the best practice is 
+      malloc([number of integers to store]*sizeof(int));
+Since it returns a void pointer we typecast it.
+       ptr = (int*)malloc([number of integers to store]*sizeof(int));
+                   - In came of failure it will return NULL pointer.
+
+int main(){
+	int n, i ,*ptr;
+	n =3;
+	ptr =(int *)malloc(n * sizeof(int));   //here ptr becomes an array and can be used as ptr[i]
+	printf("Enter Values");
+    for (i = 0; i<n;i++){
+       scanf("%d", (ptr + i)); // no '&' since ptr takes in addresses
+    }
+    for (i = 0; i<n;i++){
+       printf("%d", *(ptr + i));
+    }
+    free(ptr);
+    return 0; 
+}
+
+calloc() in C
+
+calloc - contiguous allocation (uses the header stdlib.h)
+       - allocates multiple blocks of memory
+                           - size of each block
+void *calloc (size_t n , size_t size)
+                - no of blocks
+
+calloc (5 , sizeof(int)); // 5 blocks of size of integer (returns base address of the reserved bytes
+(void pointer))
+
+ptr = (int *)calloc(5,sizeof(int));  5 blocks of 4 bytes
+ptr = (int *)malloc(5* sizeof(int)); 1 block of 20bytes(5x 4)
+   
+If this calloc function is not initialised with any value then it will store 0's. Hence
+if you print this it will print 0's
+
+realloc in C
+                       -new size
+realloc (void *ptr, size_t size)
+              - previously allocated pointer
+
+   ptr = (int*)malloc(5* sizeof(int));
+    ptr1    =(int*)realloc(ptr, newsize * sizeof(int)); // it will expand the current block if possible
+If expansion is not possibe , it will allocate a new block , copy the content from the allocated block,
+deallocate the previous block and expand it there.
+
+         =(int*)realloc(NULL, n*sizeof(int)); //it acts similar to malloc
+         =(int*)realloc(ptr,0); //it acts similar to free()
+
+free() in c
+
+Should not use ptr after freeing the ptr. If you call after freeing UB (undefined behaviour)
+
+Memory leak in C
+
+-> Due to improper use of heap
+
+int sum(){
+	int *ptr = (int*)malloc(2*(sizeof(int)));
+	sum = (*(ptr+0) + *(ptr+1));
+	printf("%d",sum);
+}
+int main(){
+	int ch=1;
+	while(ch){
+	sum();
+	printf("continue?");
+	scanf("%d",&ch);
+	}
+}
+   
+On initial run , ptr gets allocated dynamic memory from heap. This memory is not freed
+hence on the next run a new memory location is created and the other is left unbothered/unused.
+This is memory is wasted (memory leak)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
