@@ -444,25 +444,103 @@ On initial run , ptr gets allocated dynamic memory from heap. This memory is not
 hence on the next run a new memory location is created and the other is left unbothered/unused.
 This is memory is wasted (memory leak)
 
+Strings in C
+    - 1D character array
+* String is not a datatype in C
+
+String ends with a null character("\o")
+
+char name[] = {'j,'e','n','n','y','\o'};
+
+char name[] ="Jenny";
+format specifier for string is '%s'
+
+inputting string
+
+  char name[30];
+  printf("Enter name:"); 
+  scanf("%s",&name);   // jayanti Khatri
+  printf("%s",&name);   //jayanti
+  
+  gets(name); // jayanti Khatri
+
+*Both scanf() and gets() is vulnerable to buffer overflow attack
+   
+   scanf("%4s",&name); //now it will only store 4 characters of the string
+   use fgets() to bypass the buffer overflow vuln
+
+printf("%.5s",name); //prints first five characters 
+printf("%10.5s",name); // after 10 spaces the five characters will be printed 
+
+puts(name); // from stdio.h //prints whatever is passed to it And automatically
+add a new line
+
+printf("%s", &name[2]); //prints from 2nd index (yanti) 
+
+strlen(name); //returns length (unsigned int) of string(excluding the null character)(includes " ")
+
+strcat(s1, s2); //concatinates s2 to s1. s1 -> destination s2 -> source (string.h)
+- vulnerable to buffer overflow
+
+//To avoid the buffer overflow
+char s1[20] = "jenny";
+char s2[7]  = "khatri";
+
+len1 = strlen(s1);
+len2 = strlen(s2);
+
+for(int i=0; i<= len2; i++){
+	
+	s1[len1+i] = s2[i]
+}
 
 
+strcmp(str1,str2); //returns 0 if both the strings are same. Positive if str1 has ascii value
+of the first character that does not match is greater than str2. Negative if st1 has ascii value
+of the first character that does not match is lesser than str2.
 
+//without strcmp 
+for (i =0; s1[i]! ='\o' || s2[i]!= '\o';i ++){
+	if( s1[i]! = s2[i]){
+	flag=1;
+	break;
+	}
+}
 
+strrev(str); //returns reverse of the string
 
+//without strrev()
 
+int l = strlen(str);
+for( i =0; i<l/2; i++){
+    ch = str[i];
+	str[i] = str[l-1-i];
+	str[l-1-i] = ch;
+}
 
+//without strlwr() converting to lower in C
 
+for (i = 0; s1[i]!= '\o';i++){
+	if(s1[i]>= 65 && s1[i]<= 90 ){ //Upper characters
+	s1[i] = s[i]+ 32;              //changing ASCII value to lower characters
+	}
+}
 
+Functions in C
 
+//Call by value (value copied)
+void fun(int, int);
 
+void main(){
+	int x = 5, y = 7;
+	fun(x,y);
+	printf("%d %d", x,y); //5 7
+}
 
-
-
-
-
-
-
-
+void fun(int x, int y){
+    x=7;y=5;
+    printf("%d %d",x,y)	; // 7 5
+}
 
 
 
