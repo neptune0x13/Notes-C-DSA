@@ -542,6 +542,215 @@ void fun(int x, int y){
     printf("%d %d",x,y)	; // 7 5
 }
 
+//call by reference (pass address)
+void fun(int, int);
+
+void main(){
+	int x = 5, y = 7;
+	fun(&x,&y);
+	printf("%d %d", x,y); //7 5
+}
+
+void fun(int* x, int* y){ //only pointers can taken in address hence the change
+    *x=7;*y=5;
+    printf("%d %d",*x,*y)	; // 7 5
+}
+
+datatype funcname(void); //if you dont want the user to input an argument into the funtion
+
+//passing array in function
+
+int avg(int [],int);
+
+void main(){
+	int marks[5];  
+	int size = sizeof(marks)/sizeof(marks[0]); //sizeof(marks) -> 20 and sizeof(marks[]) -> 4
+	                                            hence its 5.
+	int c = avg(marks,size);
+}
+
+int avg (int marks[], int s){
+	                //here if you do sizeof(marks) it will print 4bytes cause during function
+	                call, only the pointer to the array is passed not the entire array itself.
+}
+
+//when passing string to a function use the following to find the length of the string
+
+for(i=0;str[i]!='\0';i++){ \\correct way of writing null ('\0')
+	length = length+1;
+}
+
+//Returning strings from a function
+
+char* display(){
+	return "Jenny";
+}
+
+void main(){
+	char *str;
+	str = display();
+	printf("%s", str);f
+}
+
+if you write,
+
+char* display(){
+	char str[] = "Jenny"; //str stored in stack memory of this function
+	return str;           //when control goes to main , the allocated stack memory is freed
+}                         //Hence, you cannot access the original value of str anymore
+
+//solution to the above
+
+char* display(){
+	static char str[] = "Jenny"; //for static and global the memory allocation is separate.
+	                             //Hence it can be accessed from there.
+	return str;
+}
+
+or
+
+char* display(){
+	char* str = "Jenny";
+	return str;
+}
+
+//Returning pointer from function
+
+int* returnpointer (int []);
+
+void main(){
+	int *p;
+	int a[] = {1,2,3,4,5}; // we cant do this 'a = a + 2;' here cause 'a' is a constant pointer
+	                         (base address of an array)
+	p = returnpointer(a);
+	printf("%d",*p); // prints 3
+}
+
+int * returnpointer(int a[]){
+	a = a + 2; // pointing to 3 //here we can do this cause its just a pointer and not the whole
+	              array.
+	return a;
+}
+
+Storage classes in C
+
+//4 Types
+auto      -> deafult storage class
+register
+extern
+static
+
+scope - block
+      - function/method
+      - programs
+
+//Header files
+
+int a = 50;  //program scope
+
+int main(){
+	int a = 10;    //function scope
+	{
+	int a = 20;   //block scope 
+	printf("Inside block1: %d",a); //20
+	}
+	{
+	  printf("%d",a++); //10
+	}
+	printf("%d",a); // 11
+	return 0;
+}
+
+//Auto storage class
+
+auto int a;
+Deafult value - Garbage value
+scope - block or function (cannot be a global variable)
+location - stack
+
+//Register storage class
+
+register int a;
+Deafult value - Garbage value
+scope - block or function
+location - CPU registers 
+
+Register storage class helps in accessing the variables quickly
+
+We cannot get the address of register storage class variable using pointer
+
+//Static storage class
+
+Deafult value - 
+static float x;     - 0.0
+static int y;       - 0
+static char ch;     - NULL
+static char str[20] - NULL 
+scope - within the block 
+lifetime - till the end of the program
+
+void main(){
+	display();    //initially on call of static x , a new memory is created with deafault value as 0;
+	display();    //initially created static memory is retained. 
+}
+void display(){
+	static int x;
+	x += 10;                //second function call value becomes 20
+	printf("\n X= %d",x);  // first function call X = 10  //second function 20 is printed
+}
+
+//Extern storage class
+
+extern int x; //no space/memory allocation for x
+
+* In file1.c you have: int x =10;
+* In file2,c you just need to do 'extern int x;'(global declaration) to free up space.
+                                 'extern void display();' //use #include "file1.c"
+
+
+int main(){
+	extern int a;
+	printf("%d",a); //prints 10
+}
+int a = 10;
+
+//Structures in C
+
+ struct student    //Just a template, no memory allocation. //structure name is optional
+ {
+  int rollno;
+  char name[20];
+  float marks;
+ };               //($) }s1,s2; // }s = {35, "Ankur",70}
+
+ void main(){
+  int a;
+  struct student s1;        // with no name , this defintion is not possible follow ($)
+ }
+
+ void main(){
+  struct student s1 = {1,"jenny", 90.91}; 
+ }
+
+scanf("%d %s %f", &s2.rollno, &s2.name, &s2.marks); //each input in next new line 
+
+* To take in string "&" is optional
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
