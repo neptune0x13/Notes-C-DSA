@@ -736,6 +736,125 @@ scanf("%d %s %f", &s2.rollno, &s2.name, &s2.marks); //each input in next new lin
 
 * To take in string "&" is optional
 
+Pointer to structure
+
+struct student{
+	int rollno;
+	char name[20];
+	float marks;
+};
+struct student s = {1,"jenny"};   //s is a internal pointer variable
+void main(){
+	struct student *ptr = &s;
+    printf("rollno: %d", ptr -> rollno); //accessing structure elements using pointer
+}                       => (*ptr).rollno
+   
+
+//Union in C
+
+union abc{
+	int a;
+	char b;
+	float c;
+};
+void main(){
+	union abc u;
+	u.a =1;
+	u.b = 97;
+	u.c = 9.2; //only 9.2 will be stored and rest are overwritten, even if these are printed
+	only u.c will give you the inputed value rest will just give out grabage values.
+}
+
+In union the variable that has the greatest size , that size will be given to a block of memory that
+all the variables commnly use whereas in structure variables are stored continously in their own blocks
+w.r.t their datatype.
+
+//Typedef using structures 
+
+* Create an alias for a datatype
+
+typedef int integer;
+int main(){
+	integer a = 10;
+}
+
+typedef struct student{
+	
+}student;         // now 'student' is the alias for 'struct student'
+int main(){
+	student s;
+}
+
+//Structure padding in C
+
+struct abc{
+	char a;
+	int b;
+}s;
+
+CPU is word addressable,
+    32bit system has word of 4bytes
+    64bit system has word of 8bytes
+
+* If CPU is byte addressable then it will take 4 CPU cycles to fetch a single integer(4bytes).
+
+In the above struct case if we store char and int together
+then. 'char' will take 1 byte then 'int' will take 3 bytes of 'char''s word
+now we face a wastage of memory in 2nd word where only one byte of 'int' is stored 
+in a word.
+
+To counter this 'int' is only stored in multiples of 4. Makesure it can occupy one
+whole word. Now in the above 'char' will take 1 byte of first word, then leave three 
+memory space and store 'int' completely in 2nd word. Hence 8bytes will
+be allocated. This is called Padding
+
+struct abc{
+	char a;
+	int b;
+	char c;
+}
+
+Here 'char a' will take one byte of first word. Then integer will take the whole of 2nd word
+and then 'char c' will take one of byte of the third word. Total 12bytes
+
+
+struct abc{
+    char c;
+	char a;
+	int b;
+}
+
+Here 'char a' and 'char c' will take first two bytes of first word and integer will take the whole
+of second byte. Hence total 8 bytes.
+
+//Structure Packing in C
+
+#pragma pack(1); // now no structure packing will be done and the size will be sum of the variable sizes
+          - one byte alignment => no padding byte by byte storage
+
+
+Here, more preformance will be required to read the data from the memory 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
