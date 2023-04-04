@@ -1,0 +1,187 @@
+//Arrrays in Data Structure 
+
+Traversal of array - use for loop
+
+//Insertion ar a specific position
+
+ar = {1,2,3,4,5};
+
+//pos = 3 => index = 2
+At index 2 we have '3'. Now if we start swapping from index 2 we will overwrite rest of the data.
+Hence swapping should begin from the end of the array
+
+printf("Enter position");
+scanf("%d",&pos);
+
+if(pos <= 0 || pos > size+1){
+	printf("Invalid position");
+	exit(0); //just do something to stop the program
+}
+else{
+  for(i = size-1; i>= pos-1; i--){
+	a[i+1] = a[i];
+}
+a[pos - 1] =num;
+size++;
+
+}
+
+best case - O(1) worst case - O(n)
+general - O(n-p) // p - position
+
+// for an unsorted array  
+a[size] = a[size-1];
+a[pos-1] = num;
+
+//Deletion in Array
+
+if(pos <= 0 || pos >size){
+	printf("Invalid pos");
+}
+
+else{
+	for(int i = pos -1;i <size-1;i++){
+	     a[i] = a[i+1]; //swapping every element to the right from the position of the element to be
+	      deleted
+	}
+	size --;
+}
+
+//Array and pointer
+
+int a[] = {6,2,1,5,3};
+
+a[2] = *(a+2) = 2[a];
+
+a + 1; // next element address
+&a + 1; //end of array address
+&a[0] + 1; //104 assuming base address to be 100
+
+scanf("%d", &a[i]); //or &q[i] 
+
+//2-D Array
+
+int a [][3]; //valid
+int a [2][]; //invalid
+
+a[i][j] = B + [((i-1)*n) + (j-1)]*size; //row major
+a[i][j] = B + [((j-1)*m) + (i-1)]*size; //column major
+
+//Pointers and 2-D arrays
+
+int a[3][3] = {6,2,5,0,1,3,4,9,8};
+
+a[0] = {6,2,5};
+a[1] = {0,1,3};
+a[2] = {4,9,8};
+
+int *p;
+p = &a[0][0]; or p = a[0];
+
+if address starts from 100 then,
+a+1 = 112(addy)  //Starting address of a[1] //&a[1]
+*(a+1) = 112 / a[i] / &a[1][0]  //(a+1) is itself a 1D array.
+*(a+1)+2 = 120 //112 + 4*2 = 120 
+
+*(*(a+1) + 2) = 3
+ 
+//Linked List
+
+MemoryManager - The one who allocates space 
+
+*In an array of size 200 if only 10 are being used by the programmer then it will lead to wastage of 
+memory
+
+*Linked List doesnt store vals in continuous location
+  -pointer to the next node
+4|113  3|123  8|132  9|NULL
+ 102    113    123    132
+
+*Insertion in linked list will remove the fixed size problem with arrays
+
+ struct node{
+    int a; //value of node
+    struct node * next; //pointer of the node pointing to the next node
+ }
+
+Accessing any element in linked list - O(n) (worst case)
+
+*Insertion and deletion is easier than array.
+
+//Types of Linked List
+
+//Singly linked list
+*Single list to next node.
+*Only forward traversal is possible.
+
+struct node{
+    int a; //value of node
+    struct node * next; //pointer of the node pointing to the next node
+ }
+
+//Doubly linked list
+- points to previous node in the list
+pt1 | data | prt2 
+               -points to next node in the list 
+
+100 -> |NULL| 1 |200| ->|100| 2 |300|  -> |200| 3 |NULL| 
+head         100             200               300
+
+struct node
+{
+	int node;
+	struct node * next;   //address of the variable to be stores, its datatype is struct node hence  
+	                                                                                   struct node*
+	struct node * prev;
+}
+
+//Circular linked list (singly)
+
+100   ->|1|200| -> |8|300| -> |10|100|  --
+head      100        200         300      |
+           ^------------------------------|
+
+//Doubly circular linked list
+             
+            
+100 ->|300 | 1 |200| <-> |100|2|300|  <->  |200|3|100| <--
+head        100              200                300       |
+             ^--------------------------------------------|
+
+//Array vs Linked List
+                                                Array       Linked list
+cost of accessing an element:                   O(1)        O()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
