@@ -792,11 +792,44 @@ isFull() -> returns true if stack is full else false
 
 //Stack using Array's
 
+#define N 5
+int stack[N];
+int top = -1;
 
+void push(){
+ if(top == N - 1)
+   printf("Overflow");
+ else{
+  printf("Enter data");
+  scanf("%d",&data);
+  top++;
+  stack[top] = data;
+ }
+}
 
+void pop(){
+  if(top == -1){
+  printf("Underflow");
+  }
+  else{
+   top--;
+  }
+}
 
+void peek(){
+  if(top == -1){
+  printf("the stack is empty");
+  }
+  else{
+   printf("%d",stack[top]);
+  }
+}
 
-
+void display(){
+  for(int i = top; i >= 0; i--){
+  printf("%d",stack[top);
+  }
+}
 
 
 
