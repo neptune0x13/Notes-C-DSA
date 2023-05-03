@@ -124,7 +124,7 @@ struct node{
 pt1 | data | prt2 
                -points to next node in the list 
 
-100 -> |NULL| 1 |200| ->|100| 2 |300|  -> |200| 3 |NULL| 
+100 -> |NULL| 1 |200| <->|100| 2 |300|  <-> |200| 3 |NULL| 
 head         100             200               300
 
 struct node
@@ -149,8 +149,654 @@ head        100              200                300       |
              ^--------------------------------------------|
 
 //Array vs Linked List
-                                                Array       Linked list
-cost of accessing an element:                   O(1)        O()
+                                                Array             Linked list
+cost of accessing an element    :               O(1)              O(n)
+
+Memory requirement(MR) +        :               MR less           MR more
+Memory utilization(MU)                          MU less           MU more
+
+cost of insertion               :
+
+   1)At beginning               :               O(n)              O(1)
+   2)At end                     :               O(1)              O(n)  //traversal
+   3)At ith postion             :               O(n)              O(n)
+
+Search algo                     :               Linear & Binary   Linear
+
+//Implementation of linked list
+
+struct node{
+	int data;
+	struct node* next;
+};
+              //-the head of linked list
+struct node* head , *newnode , *temp; //temp a value we can change to make links to new nodes
+head = 0;           //-To create a new node
+ 
+newnode = (struct node *)malloc(sizeof(struct node));
+printf("Enter data");  
+scanf("%d",&newnode->5);
+newnode->next = 0; // |5|0| //data 5 and pointing to 0 cause its not pointing to anything atm.
+//newnode is a pointer pointing the base address of the created node, which is 
+//what head is supposed to hold hence,
+if(head == 0){
+  head = temp = newnode; 
+}
+else{
+  temp->next = newnode;
+  temp = newnode;
+}
+   
+//Link  traversal 
+
+temp = head; //from start
+while(temp!= 0){
+	printf("%d",temp->data);
+	temp = temp -> next;
+}
+
+//Insertion in linked list
+ 
+struct node{
+	int data;
+	struct node *next;
+}
+struct node *head, *newnode;
+                     -> new node to be inserted
+
+newnode = (struct node *)malloc(sizeof(struct node));
+                  ->type casting     -> return void pointer
+printf("Enter data you want to insert");
+scanf("%d", &newnode->data);
+
+//Insert at beginning
+newnode -> next = head; //address in head is that of the 1st node which is now stored in newnode
+head = newnode; // head is updated to contain newnodes address
+
+//Insert at end
+struct node* temp;
+newnode->next = 0; //making next address null cause its going to be the new end node.
+temp = head; //temp for traversing the list cause head cant be changed
+while(temp-> next !=0 ){
+   temp = temp->next;    //points to the next element each iteration //it will traverse upto the 
+                           current end node.
+}
+temp-> next = newnode;  //current end nodes next will now point to newnode's address
+
+//Insert at a certain position(check position is valid first)
+
+printf("Enter position");
+scanf("%d",&pos);
+struct node* temp;
+int i = 1;
+temp = head;
+while(i < pos){
+	temp = temp->next;
+	i++;
+}
+printf("Enter data");
+scanf("%d",&newnode -> data);
+newnode->next = temp->next;
+temp->next = newnode;
+
+//Deletion from linked list
+
+struct node{
+	int data;
+	struct node *next;
+}
+struct node *head;
+
+//Delete from beginning (check if list is empty first )
+
+struct node *temp;
+temp = head;
+head = head ->next; // pointing to next node and leaving the first node
+
+free(temp); //completely deletes the node
+
+//Delete from end 
+
+struct node *temp, *prevnode;
+temp = head;
+while(temp->next != 0){
+    prevnode = temp; // will store a node before temp
+	temp = temp->next;
+}
+if(temp == head){ //only one node
+	head = 0; 
+}
+else{
+    prevnode->next = 0;
+}
+free(temp); //completely deleting the end node
+
+//Delete from a specific position
+
+struct node{
+	int data;
+	struct node* next;
+} 
+struct node *head,*temp , *nextnode;
+temp = head;
+int pos = 0 , i = 1;
+printf("Enter position");
+scanf("%d",&pos);
+
+while(i < pos-1){    //iterate till a position before before the entered postiion
+	temp = temp -> next;
+	i++;
+}
+nextnode = temp->next;
+temp->next = nextnode->next;
+free(nextnode);
+
+//Reverse a Linked List
+ struct node{
+   int data;
+   struct node *next;
+ };
+struct node * head;
+
+//Reverse a linked list
+
+void reverse(){
+	struct node *prevnode,*currentnode,*nextnode;
+	prevnode = 0;
+	currentnode = nextnode = head;
+	while ( nextnode!=  0){
+	    nextnode = nextnode->next;
+	    currentnode->next  = prevnode;
+	    prevnode = currentnode;
+	    currentnode = nextnode;
+	}
+	head = prevnode;
+}
+
+
+//Doubly linked list
+
+struct node{
+	int data;
+	struct node* next;
+	struct node* prev; 
+}
+struct node* head, *newnode;
+
+void create(){
+      struct node *temp;
+	  newnode =  (struct node*)malloc(sizeof(struct node));
+	  printf("\nEnter data");
+	  scanf("%d",&newnode->data);
+	  newnode -> prev = 0;
+	  newnode -> next = 0;
+	  if(head == 0){
+	   head = temp = newnode;
+	  }
+	  else{
+	    temp->next = newnode;
+	    newnode->prev = temp;
+	    temp = newnode;    
+	  }
+}
+
+//insertion in Doubly linked list
+
+struct node{
+	int data;
+	struct node* next;
+	struct node* prev; 
+}
+struct node* head, *newnode , *tail;
+
+void insertatbeg(){
+    newnode = (struct node*)malloc(sizeof(struct node)); 
+    newnode->next = newnode-> prev = 0;             //just creating a newnode no relation with code
+	newnode->next = head;
+	head->prev = newnode;
+	head = newnode;
+}
+
+void create(){  
+    newnode = (struct node*)malloc(sizeof(struct node)); 
+    newnode->next = 0;
+    newnode->prev = 0;
+	if(head == 0){
+	  head = newnode;
+	  tail = newnode;
+	}
+	else{
+	   newnode->prev = tail;
+	   tail->next = newnode;
+       tail = newnode;
+	}
+}
+
+void insertatend(){             //this is if a tail pointer is kept at creation (in create())
+	tail->next = newnode;
+	newnode->prev = tail;
+	tail = newnode;
+}
+
+void insertAtpos(){
+	 struct* node temp;
+	 temp = head;
+	 int n =0 ;
+	 newnode = (struct node*)malloc(sizeof(struct node)); 
+     newnode->next = 0;
+     newnode->prev = 0;
+     //check if pos is < length and create else if condition for (pos ==1)
+	 while(n < pos-1){ /
+	   temp = temp->next;
+	   n++;
+	 }
+	 newnode->next = temp->next;
+	 temp->next = newnode;
+	 newnode->prev = temp;
+	 newnode->next->prev = newnode; //the next node's previous
+}
+
+void insertafterpos(){} //same as atpos() without (pos == 1) condition  and then while(n<pos)
+
+//Deletion in doubly linked list
+
+void delfromebeg(){
+    if(head == 0 ){
+       printf("List empty");
+    }
+    else{
+    temp = head;
+    head = head->next;
+    head->prev = 0;
+    free(temp);
+    }
+}
+
+void delfromend(){
+    struct node* temp;
+    temp = tail
+	tail->prev->next = 0;
+	tail = tail->prev;
+	free(temp);
+}
+
+void deletefrompos(){
+	struct node* temp;
+	temp = head;
+	int n = 0;
+	//check postion 
+	while( n < pos){
+	   temp  = temp->next;
+	}
+	temp->prev->next = temp->next;
+	temp->next->prev = temp->prev;
+	free(temp);
+}
+
+//Reversing a doubly linked list
+
+
+void reverse(){
+	struct node* current, nextnode;
+	current = (struct node*)malloc(sizeof(struct node));
+	nextnode = (struct node*)malloc(sizeof(struct node));
+	current = head;
+	while(current != 0 ){
+	  nextnode = current->next;
+	  current->next = current->prev;
+	  current->prev =  nextnode;
+	  current = nextnode;
+	}
+	current = head;    //swapping head and tail for further use in the program
+	head = tail;       //the above loop itself should reverse it 
+	tail = current;
+}
+
+//Circular linked list
+
+struct node{
+	int data;
+	struct node* next;
+}
+struct node* head,temp;
+
+//creation
+
+void createcll(){
+	struct node* newnode;
+	newnode = (struct node*)malloc(sizeof(struct node));
+	scanf("%d", &newnode->data);
+	newnode->next = 0;
+	if(head == 0){
+	  head = temp = newnode;
+	}
+	else{
+	  temp->next = newnode;
+	  temp = newnode;
+	}
+	temp->next = head;
+}
+
+//Display
+
+void display(){
+    //check if list is empty first
+	temp = head;
+	while(temp -> next != head){
+	   printf("%d",temp->data);
+	   temp = temp->next;
+	}
+	print("%d", temp->data); //the last node doesnt satisfy the condition hence we have print it
+	                         //outside the loop
+}
+
+
+//creation while maintaining a tail pointer (you can do this only by using tail and no head)
+
+struct node* tail;
+
+void createcll(){
+	struct node* newnode;
+	newnode = (struct node*)malloc(sizeof(struct node));
+	scanf("%d", &newnode->data);
+	newnode->next = 0;
+	if(head == 0){
+	  head = tail = newnode;
+	}
+	else{
+	  tail->next = newnode;
+	  tail = newnode;
+	}
+	tail->next = head;
+}
+
+//Insertion in circular linked list (no head , just tail)
+
+void insertatbeg(){
+   if(tail == 0){
+    tail = newnode;
+    tail->next = newnode;
+   }
+   else{
+	newnode->next = tail->next;
+	tail -> next = newnode; 
+   }
+}
+
+void insertatend(){
+	if(tail == 0){
+	tail = newnode;
+	tail->next = newnode;
+	}
+	else{
+	newnode->next = tail->next;
+	tail->next = newnode;
+	tail = newnode;
+	}
+}
+
+void insertatpos(){
+	temp = tail->next;
+	int n = 0;
+	//check if valid pos
+	if(pos == 1){
+	 insertatbeg();
+	}
+	else{
+	while(n < pos - 1){
+       temp  = temp->next;
+       n++:
+	}
+    newnode->next = temp->next;
+    temp->next = newnode;
+    }
+
+}
+
+//Deletion in circular Linked list (no head, just tail)
+
+void delfrombeg(){
+    temp = tail->next;
+    if(tail == 0){
+      printf("List empty");
+    }
+    else if(temp->next == tail){
+    tail = 0;
+    free(temp);
+    }
+    else{
+	tail->next  = temp->next;
+	free(temp);
+	}
+}
+
+void delfromend(){
+    struct node* current, previous;
+	if(tail == 0 ){
+	printf("List empty");
+	}
+	else if(current->next == current){
+     tail= 0;
+     free(current);
+	}
+	else{
+	 while(current->next != tail->next){
+	 previous = current;
+	 current = current->next;
+	 } 
+	 pervious->next = tail->next;
+     free(current);
+     tail = previous;
+	}
+}
+
+void delfrompos(){
+	struct node* cureent , previous;
+	current = tail->next;
+	int n = 0;
+	//check pos is valid (if pos == 1 delfrombeg() && if pos == length() delfromend())
+	while(n < pos ){
+	previous = current;
+	current = current->next
+    n++;
+	}
+	previous->next = current->next;
+	free(current);
+}
+
+//Reverse a circular linked list
+
+void reverse(){
+	struct node* current , previou ,nextnode;
+	current = (struct node*)malloc(sizeof(struct node));
+	previous = (struct node*)malloc(sizeof(struct node));
+	nextnode = (struct node*)malloc(sizeof(struct node));
+	current = tail->next;
+	nextnode = current-.next;
+	while(current != tail){
+      previous = current;
+      current = nextnode;
+      nextnode = current->next;
+      current->next = previous;
+	}
+	nextnode->next = tail;
+	tail = nextnode;
+}
+
+// Doubly Circular linked List
+
+struct node{
+	int data;
+	struct node* next;
+	struct node* prev;
+}
+struct node *head, *tail;
+
+void createDCLL(){
+	struct node *newnode;
+	newnode = (struct node*)malloc(sizeof(struct node));
+	if(head == 0){
+	  head = tail = newnode;
+	  head->next = newnode;
+	  head->prev = newnode;
+	}
+	else{
+	  newnode->next = tail->next;
+	  newnode->prev = tail;
+      tail->next = newnode;
+      tail = newnode;
+	}
+}
+
+//Insertion in Doubly circular linked list
+
+void insertAtbeg(){
+    struct node* newnode;
+    newnode = (struct node*)malloc(sizeof(struct node));
+    if(head == 0){
+     head = tail = newnode;
+     newnode->next = tail;
+     newnode->prev = head
+    }
+    else{
+	newnode->next = head;
+	newnode->prev = tail;
+	head->prev = newnode;
+	head = newnode;
+	tail->next = newnode;
+	}
+}
+
+void insertAtend(){
+	struct node *newnode;
+	newnode = (struct node *)malloc(sizeof(struct node));
+	if(head == 0){
+	  head = tail =newnode;
+	  head-> next = head->prev = newnode;
+	}
+	else{
+	 newnode->next = head;
+	 tail->next = newnode;
+	 newnode->prev = tail;
+	 tail = newnode;
+	 head->prev = newnode;
+	}
+}
+
+void insertAtpos(){
+	struct node *newnode;
+	newnode = (struct node*)malloc(sizeof(struct node));
+	if(pos < 1 || pos > getlength()) { //create a getlength() to find length of the list 
+       printf("Invalid pos");
+	}
+	else if(pos == 0){
+	insertAtbeg();
+	}
+	else if (pos == getlength()){
+	insertAtend();
+	}
+	else {
+	   struct node* temp;
+	   temp = head;
+	   int n = 1;
+	   while(n < pos-1){
+           temp = temp->next;
+           n++;
+	   }
+	   newnode->next = temp->next;
+	   newnode->prev = temp;
+	   temp->next->prev = newnode;
+	   temp->next = newnode;
+	}
+}
+
+// Deletion from a doubly linked list
+
+void delfrombeg(){
+   struct node* temp;
+	temp = head;
+   if(head == 0){
+    printf("Underflow");
+   }
+   else if(head->next == head){
+      temp = head;
+      head = tail = 0;
+      free(temp);
+   }
+   else{
+	tail->next = head->next;
+	head->next->prev= tail;
+	head = head->next;
+	free(temp);
+   }
+}
+
+void delfromend(){
+	struct node* temp;
+	temp = tail;
+	if(head == 0){
+	  printf("Underflow");
+	}
+	else if(head->next == head){
+	  head = tail = 0;
+	  free(temp);
+	}
+	else{
+	  tail->prev->next = tail->next;
+	  tail->next->prev = tail->prev;
+	  tail = tail->prev;
+      free(temp);
+	}
+}
+
+void delfrompos(){
+	struct node* temp;
+	temp = head;
+	int i = 1;
+	if(pos < 1 || pos > getlength()) { //create a getlength() to find length of the list 
+       printf("Invalid pos");
+	}
+	else if(pos == 0){
+	delfrombeg();
+	}
+	else if (pos == getlength()){
+	delfromend();
+	}
+	while(i < pos ){
+	  temp = temp->next;
+	  i++;
+	}
+	temp->prev->next  = temp->next;
+	temp->next->prev = temp->prev;
+	if(temp->next == tail){
+        tail = temp->prev;
+        free(temp);
+	}
+	else{
+        free(temp);
+	}
+}
+
+//Stack 
+
+-> Linear data structure.
+-> insertion and deletion is possible only from one end.
+
+Operations:
+
+push(x)
+pop()
+peek() / top () -> return top most element
+isEmpty() -> returns true if stack is empty else false
+isFull() -> returns true if stack is full else false 
+
+//Stack using Array's
+
+
+
+
+
+
 
 
 
