@@ -792,7 +792,7 @@ isFull() -> returns true if stack is full else false
 
 //Stack using Array's
 
-#define N 5
+#define N 5;
 int stack[N];
 int top = -1;
 
@@ -831,12 +831,102 @@ void display(){
   }
 }
 
+void main(){
+	push();
+	pop();
+	peek();
+	display();
+}
 
+//Stack using Linked list
 
+struct node{
+	int data;
+	struct node *next;
+}
+struct node *top;
 
+void push(int x){
+	struct node *newnode;
+	newnode = (struct node*)malloc(sizeof(struct node));
+	newnode->data = x;
+	newnode->next = top;
+	top = newnode;
+}
 
+void display(){
+    struct node* temp;
+    temp = top;
+    if(top == 0){
+      printf("Stack empty");
+    }
+    else{
+		while(temp != 0){
+		  printf("%d",temp->data);
+		  temp = temp->next;
+		}
+	}
+}
 
+void peek(){
+    // if(top == 0){printf("Stack is empty")} else part below
+	printf("%d",top->data);
+}
 
+void pop(){
+    // if(top == 0){printf("Stack is empty")} else part below
+	struct node* temp;
+	temp = top;
+	top = top->next;
+	free(temp);
+
+}
+
+//Infix Prefix Postfix
+
+Infix - <operand><operator><operand>
+
+(1) (){}[]
+(2) ^       R-L
+(3) * /     L-R
+(4) + -     L-R
+
+Prefix - <operator><operand><operand>
+//infix to prefix
+5 + 1 -> +51
+a*b + c = *ab +c => +*abc
+
+Postfix - <operator><operand><operator>
+//infix to posfix
+5 + 1 -> 51+
+a*b + c = ab* + c =>  ab*c+
+
+//Infix to post fix conversion
+
+Print operands as they arrive
+
+If stack is empty or contains a left parenthesis on top, push the incoming
+operator onto the attack
+
+If incoming symbol is '(', push it onto stack
+
+If incoming symbol is ')', pop the stack and print the operators until left
+parenthesis is found
+
+If incoming symbol has higher precedence than the top of the stack, push it
+on the stack
+
+If incoming symbol has lower precedence than the top of the stack, pop and 
+print the top. Then test the incoming operator against the new top of the stack
+
+If incoming opertor has equal precedence with the top of the stack, use associativity rule.
+
+At the end of the expression, pop and print all operator of stack
+
+Associativity L to R , then pop and print the top of the stack and then push the incoming 
+operator
+
+R to L , then push the incoming operator
 
 
 
