@@ -928,6 +928,67 @@ operator
 
 R to L , then push the incoming operator
 
+//Queue
+enqueue()
+dequeue()
+front()/peek()
+isfull()
+isEmpty()
+
+front = rear = -1; //queue is empty
+
+Application: Single shared resource (Eg: printer (print queue))
+
+//Implimentation of queue using array
+#define N 5
+int queue[N];
+int front = -1 , rear = -1;
+
+void enqueue(int x){
+	if(rear == N-1){
+	printf("Overflow");
+	}
+	else if (front == -1 && rear == -1){
+	font = rear = 0;
+	queue[rear] = x;
+	}
+	else{
+	rear++;
+	queue[rear] = x;
+	}
+}
+
+void dequeue(){
+	if(front == -1 && rear == -1){
+	printf("Underflow");
+	}
+	else if(front == rear){
+	front = rear = -1;
+	}
+	else{
+	front++;
+	}
+}
+
+void display(){
+	if(front == -1 && rear == -1){
+	printf("Queue is empty");
+	}
+	else{
+	 for(int i = front; i <=rear; i++){
+     	printf("%d",queue[i]);
+	 }
+	}
+}
+
+void peek(){
+	if(front == -1 && rear == -1){
+	printf("Queue is empty");
+	}
+	else{
+	printf("%d",queue[front]);
+	}
+}
 
 
 
