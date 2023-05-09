@@ -939,7 +939,7 @@ front = rear = -1; //queue is empty
 
 Application: Single shared resource (Eg: printer (print queue))
 
-//Implimentation of queue using array
+//Implementation of queue using array
 #define N 5
 int queue[N];
 int front = -1 , rear = -1;
@@ -989,9 +989,88 @@ void peek(){
 	printf("%d",queue[front]);
 	}
 }
+*Memory wasteage: front and rear can be at index 1. Which means index 0 will be left free
+and unused 
 
+//Implementation of Queue using linked list
 
+struct node {
+	int data;
+	struct node* next;
+} 
+struct node* front = 0;
+struct node* rear = 0;
 
+void enqueue(int x){
+	struct node* newnode;
+	newnode = (struct node*)malloc(sizeof(struct node));
+	newnode->data = x;
+	newnode->next = 0;
+
+	if(front == 0 && rear == 0){
+	  front = rear = newnode;
+	}
+	else{
+	  rear->next = newnode;
+	  rear = newnode;
+	}
+}
+
+void display(){
+    if( front == 0  && rear == 0){
+    printf("Queue is empty");
+    }
+    else{
+	struct node* temp = front;
+	while(temp != 0 ){
+	 printf("%d", temp->data);
+	 temp = temp->next;
+	}
+	}
+}
+
+void dequeue(){
+   
+  if(front == 0 && rear == 0){
+  printf("Underflow");
+  }
+  else{
+     struct node* temp;
+     temp = front;
+     front = front->next;
+     free(temp);
+  }
+}
+
+void peek(){
+   if(front == 0){
+   printf("Queue is empty");
+   }
+   else{
+   printf("%d",front->data);
+   }  
+}
+
+Circular Queue Implementation using arrays
+
+#define N 5
+int queue[N];
+int front = -1;
+int rear = -1;
+
+int enqueue(int x){
+	if(front == -1 && rear == -1){
+        front = rear = 0;
+        queue[front] = x;
+	}
+	else if( (rear+1)% N == front){
+       printf("Overflow");
+	}
+	else{
+	  rear = (rear+1)%N;
+	  queue[rear] = x;
+	}
+}
 
 
 
