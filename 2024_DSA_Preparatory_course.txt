@@ -1051,7 +1051,7 @@ void peek(){
    }  
 }
 
-Circular Queue Implementation using arrays
+//Circular Queue Implementation using arrays
 
 #define N 5
 int queue[N];
@@ -1072,14 +1072,265 @@ int enqueue(int x){
 	}
 }
 
+void dequeue(){
+	if(front == -1 && rear == -1){
+	printf("The Queue is empty");
+	}
+	else if (front == rear){
+       front = rear = -1;
+	}
+	else{
+	  front = (front+1)%N;
+	} 
+}
 
+void display(){
+	if(front == -1 && rear == -1){
+	printf("Queue empty");
+	}
+	else{
+	int i = front;
+	 while(i! = rear){
+	 printf("%d", queue[i]);
+	 i = (i+1)%N;
+	 }
+	 printf("%d", queue[rear]);
+	}
+}
 
+//Circular queue using Linked list
+struct node{
+	int data;
+	struct node* next;
+}
+struct node* front = 0,rear = 0;
 
+void enqueue(int x){
+	struct node* newnode;
+	newnode = (struct node*)malloc(sizeof(struct node));
+	newnode->data = x;
+	if(front == 0 && rear == 0){
+	front = rear = newnode;
+	rear->next = newnode;
+	}
+	else{
+	rear->next = newnode;
+	newnode->next = front;
+	rear = newnode; 
+	}
+}
 
+void dequeue(){
+	struct node* temp;
+	temp = front;
+	if(front == 0 && rear == 0){
+	printf("Underflow");
+	}
+	else if(front == rear){
+	 front = rear = 0;
+	 free(temp);
+	}
+	else{
+	rear->next = front->next;
+	front = front->next;
+	free(temp);
+	}
+}
 
+void display(){
+	struct node* temp;
+	temp = front;
+	if(front == 0 && rear == 0){
+	printf("The queue is empty");
+	}
+	else{
+	  while(temp->next != front){
+	  printf("%d", temp->data);
+	  temp = temp->next;
+	  }
+	  printf("%d", temp->data);
+	}
+}
 
+//Implimenting queue using Stack (stack1 -> enqueue stack2 -> dequeue)
+//enqueue(O(1)) and dequeue(O(n))
 
+#define N 5
 
+int s1[N], s2[N];
+int top1 =-1,top2=-1,count = 0;
+
+void push1(int data){
+	if(top1 == N-1){
+	printf("Overflow");
+	}
+	else{
+	top1++;
+	s1[top1] = data;
+	}
+}
+
+void enqueue(int x){
+	push1(x);
+	count++;
+}
+
+void push2(int data){
+	if(top2 == N-1){
+	printf("Overflow");
+	}
+	else{
+	top2++;
+	s2[top2] = data;
+	}
+}
+int pop1(){
+	return s1[top1 --];
+}
+
+int pop2(){
+	return s2[top2 --];
+}
+void dequeue(){
+	if(top1 == -1 && top2 == -1){
+	printf("Queue is empty");
+	}
+	else{
+       for(int i = 0; i<count;i++){
+       a= pop1(); // popping 'a' from stack 1
+       push2(a);  // pushig it into stack 2
+       }
+       b = pop2();
+       printf("%d",b); //printing dequeued element
+       count --;
+       for(int i = 0; i<count;i++){
+       a  = pop2();
+       push1(a);
+       }
+	}
+}
+
+void display(){
+	int i;
+	for(i = 0; i<=top;i++){
+	printf("%d",s1[i]);
+	}
+}
+
+//Deque (Double ended queue)
+
+//Insertion and deletion are allowed from both ends
+//Input-restricted deque //insertion from one end and deletion from both
+//output-restricted dque //insertion from both and deletion from one
+
+//operation
+->InsertAtFront
+->DeleteFromFront
+->InsertAtRear
+->DeleteFromRear
+
+*Can be used for checking palindromes
+*Multiprocessor Scheduling
+
+//Implementation of Deque using Circular array
+
+#define N 5
+
+int deque[N];
+int f=-1,r=-1;
+
+void enqueuefront(int x){
+	if( f==0 && r == N -1 || f == r -1 ){
+	printf("Queue is full");
+	} 
+	else if(f == -1 && r == -1){
+	f = 0, r = 0;
+	deque[f] = x;
+	}
+	else if(f == 0){
+	f = N-1;
+	deque[f] = x;
+	}
+	else{
+	f -- ;
+	 deque[f] = x;
+	}
+} 
+
+void enqueuerear(int x){
+	if(f == 0 && r == N-1 || front == rear +1){
+	printf("Queue is full");
+	}
+	else if(f == -1 && r == -1){
+	 f = r = 0;
+	 deque[r] =x ; 
+	}
+	else if(r == N-1){
+	r = 0;
+	deque[r] = x;
+	}
+	else{
+	r++;
+	deque[r] = x;
+	}
+}
+
+void display(){
+	int i = f;
+	while(i != rear){
+	printf("%d", deque[i]);
+	i = (i+1)%N;
+	}
+	printf("%d",deque[rear]);
+}
+
+void dequeuefront(){
+	if( f == -1 && r == -1){
+	printf("empty");
+	}
+	else if ( f ==r ){
+	f = r - 1;
+	}
+	else if( f == N-1 ){
+	 f = 0;
+	}
+	else{
+	f++;
+	}
+}
+
+void dequeuerear(){
+	if( f == -1 && r == -1){
+	printf("queue is empty");
+	}
+	else if(f == r){
+	 f = r = -1; 
+	} 
+	else if(r == 0){
+	 r = N-1;
+	}
+	else{
+	 r --;
+	}
+}
+
+//Tree
+
+*Linear Data structure -> array's , linked list, queue and stack
+*Non-linear Data structure -> tree , graph
+
+*Only top to bottom access is possible
+*The immediate predicissor (the previous node) of a node is its parent node
+*The immediate successor of a node is its child node
+*The node with no child node -> leaf node
+*The node with no parent node -> root node
+*Non-leaf node -> Internal nodes
+*Path - sequence of consequtive edges from source node to destination node
+*Ancestor - Any node between root and that node
+*Decentand - Any node from that node to leaf node
+*Sub-Tree - Sub-tree is a tree which contain another tree node and all its decentands
+*Sibling - children of same parent
+*Degree of a node - no.of children of that node
 
 
 
