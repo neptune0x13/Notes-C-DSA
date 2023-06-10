@@ -1332,6 +1332,158 @@ void dequeuerear(){
 *Sibling - children of same parent
 *Degree of a node - no.of children of that node
 
+*Depth of a node  - no.of edges from root to a certain node.
+*Height of a node - no.of edges from a certain node to its leaf node (longest)
+*Level of a node  - no.of edges from root to a certain node.(represent each step as level)[Depth]
+
+*Height of tree - height of root node
+*Level of tree  - height of tree
+ 
+*n nodes -> (n-1)edges 
+
+App - file systems, routing protocols
+
+//Binary Tree
+
+Binary tree - A tree can have atmost two children
+
+The maximum no.of nodes possible at any level 'i' is - 2^i
+The maximum no.of nodes of height 'h' - (2^(h+1) - 1)
+The minimum no.of nodes of height 'h' - h+1
+
+//Full/Strict Binary Tree
+
+Each node should have either 0 or 2 children.
+
+no.of leaf node = no.of internal node + 1
+
+Max nodes - (2^(h+1) - 1)
+Min nodes = 2h+1
+
+//Complete Binary Tree
+
+All levels are completely filled except the last level. The last level has nodes
+as left as possible (filled from left to right)
+
+Max nodes - (2^(h+1) - 1)
+Min nodes = 2^h
+
+//Perfect Binary Tree
+
+All internal nodes have 2 children and all leaves are at the same level.
+
+//Degenerate Binary Tree
+
+All internal nodes have 1 child
+
+Filling in left  - left skewed binary tree
+Filling in right - right skewed binary tree
+
+//Binary Tree Implementation
+
+struct node{
+	int data;
+	struct node *left, *right;
+};
+
+struct node* create(){
+    int x;
+	struct node *newnode;
+	newnode = (struct node*)malloc(sizeof(struct node));
+	printf("Enter data (-1 for no node)");
+	scanf("%d",&x);
+	if(x == -1){
+	 return 0;
+	}
+	newnode->data = x;
+	printf("Enter left child of %d",x);
+	newnode->left = create();
+	printf("Enter right child of %d",x);
+	newnode->right = create();
+	return newnode;
+}
+
+//Binary Tree Implimentation (Sequential Representation)
+
+Inorder   - left root right   (root in-between)
+Preorder  - root left right   (root at first)
+Postorder - left right root   (root at last)
+
+//Binary Tree traversals
+
+void preorder(strcut node* root){
+	 if(root == 0){
+	 return;
+	 }
+	 printf("%d",root->data);
+	 preorder(root->left);
+	 preorder(root->right);
+}
+
+void inorder(strcut node* root){
+	 if(root == 0){
+	 return;
+	 }
+	 preorder(root->left);
+	 printf("%d",root->data);
+	 preorder(root->right);
+}
+
+void inorder(strcut node* root){
+	 if(root == 0){
+	 return;
+	 }
+	 preorder(root->left);
+	 preorder(root->right);
+	 printf("%d",root->data);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
