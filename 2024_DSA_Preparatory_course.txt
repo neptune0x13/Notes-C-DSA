@@ -1438,48 +1438,220 @@ void inorder(strcut node* root){
 	 printf("%d",root->data);
 }
 
+//Binary Search Tree
 
+The values to the left of the root node should be less than root and
+the values to the right of the root node should be more than root node
+(applies to all possible sub trees)
 
+No duplcicate elements
 
+//Deletion in BST
+ case 1 : 0 children -> just delete
+ case 2 : 1 child    -> Replace with that child
+ case 3 : 2 children -> replace with inorder predecessor or successor
+                      (largest element of left sub tree)    (smallest element of right sub tree)
 
+//AVL Tree
 
+-> It is a BST
+-> Height of left sub tree - height of right sub tree = {-1,0,1} -> Balance factor
 
+inserting x, y, z (x<y<z)
 
+step 1: 
 
+    x  (balance factor = 0)
 
+step 2:
+    
+    x  (bf = -1)
+     \
+      y (bf = 0)
 
+step 3:
 
+    x  (bf = -2)  -> unbalanced
+     \
+      y (bf = -1)
+       \
+        z (bf = 0)  //unbalanced because of right insertion hence left rotation
 
+Left rotation 
 
+    y (bf = 0)
+   / \
+  x   z (bfx = 0, bfz =0)
 
+case 2
 
+     z (bf = 2) -> unbalanced
+    / 
+   y (bf = 1)
+  /
+ x (bf = 0) //unbalanced because of left insertion hence right rotation
 
+Right rotation 
 
+    y (bf = 0)
+   / \
+  x   z (bfx = 0, bfz =0)
 
+case 3
 
+    x (bf = -2) -> unbalanced
+     \ 
+      z (bf = 1)
+     / 
+    y (bf = 0) //unbalanced because of right insertion then left insertion
+                         hence RightLefft rotation for opposing insertions
 
+Right rotation on z-y (left inserted hence right)
 
+    x            x (bf = -2)
+     \      ->    \  
+      z            y (bf = -1)
+     /              \
+    y                z (bf = 0)
 
+Left rotation on x-y (right inserted hence left)
+   
+    y (bf = 0)
+   / \
+  x   z (bfx = 0, bfz =0)
 
+case 4
+  
+   z (bf = 2) -> unbalanced
+  /
+ x (bf = -1)
+  \ 
+   y (bf = 0) //unbalanced because of left insertion then right insertion
+                         hence LeftRight rotation for opposing insertions
 
+Left rotation on x-y (right inserted hence left)
+  
+     z (bf = 2)
+    / 
+   y (bf = 1)
+  /
+ x (bf = 0)
 
+Right rotation of y-z (left inserted hence right)
 
+    y (bf = 0)
+   / \
+  x   z (bfx = 0, bfz =0) 
 
+//Constructing AVL tree
 
+14,17,11,7,53,4,13,12,8,60,19,16,20
 
+Inserting...
+                      14 (bf = 1)
+                     /  \
+       (bf =2)     11    17  (bf = -1)      //unbalanced node 11
+                   /      \ 
+       (bf =1)    7        53 (bf = 0)
+                 /
+       (bf = 0) 4
 
+right rotation
+                      14 (bf = 0)
+                     /  \
+       (bf =0)      7    17  (bf = -1)      //unbalanced node 11
+                   / \    \ 
+       (bf =0)    4   11   53 (bf = 0)
+                 
+Inserting...
+                      14 
+                     /  \
+                    7    17     
+                   / \    \ 
+                  4   11   53  (bf11 = 2) //unbalanced
+                       \
+                        13
+                       /
+                      12
+RightLeft rotation 
+                      14 
+                     /  \
+                    7    17     
+                   / \    \ 
+                  4   12   53
+                     /  \
+                   11    13
+Inserting...
+                      14 
+                     /  \
+                    7    17  (bf7 = 1 - 3 = -2) //unbalanced     
+                   / \    \ 
+                  4   12   53
+                     /  \
+                   11   13
+                   /
+                  8
+RightLeft rotation on (7-12-11)
 
+                      14 
+                     /  \
+                    11   17     
+                   / \    \ 
+                  7   12   53
+                 / \   \    
+                4   8   13
 
+Inserting...
 
+                      14 
+                     /  \
+                    11   17     
+                   / \    \ 
+                  7   12   53
+                 / \   \    \
+                4   8   13   60
 
+Left rotation
+                       14 
+                     /    \
+                    11     53    
+                   / \    /  \ 
+                  7   12 17   60
+                 / \   \    
+                4   8   13
 
+Inserting...
 
+                          14 
+                     /          \
+                    11           53 (bf = -2) 
+                   / \          /   \ 
+                  7   12       17    60
+                 / \   \      /  \
+                4   8   13   16   19
+                                   \
+                                    20 
 
+LeftRight rotation on 53-17-19
 
-
-
-
-
+                          14 
+                     /          \
+                    11           53 (bf = -2) 
+                   / \          /   \ 
+                  7   12       19    60
+                 / \   \      /  \
+                4   8   13   17   20
+                            /      
+                           16    
+                                  
+                          14 
+                     /          \
+                    11           19 (bf = -2) 
+                   / \          /   \ 
+                  7   12       17    53
+                 / \   \      /     / \
+                4   8   13   16   20   60
+                                                              
 
 
 
