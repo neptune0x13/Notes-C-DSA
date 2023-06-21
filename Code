@@ -1,3 +1,5 @@
+//Research 
+Bit manipulation 
 //Quick sort with negative numbers
 int compare(const void* a, const void* b)
 {
