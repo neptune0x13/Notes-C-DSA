@@ -1,0 +1,11 @@
+//Quick sort with negative numbers
+int compare(const void* a, const void* b)
+{
+  int va = *(const int*) a;
+  int vb = *(const int*) b;
+  return (va > vb) - (va < vb);
+}
+void sort_ascending (size_t length, int array[length])
+{
+  qsort(array,length,sizeof(int),cmpfunc);
+}
