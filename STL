@@ -1,0 +1,401 @@
+//Pairs (#include <utility>)
+ 
+pair<datatype , datatype} objname = {data,data};
+
+pair<int,int> p = {1,3};
+
+p.first  // To access first element  1
+p.second // To access second element 3
+
+pair<int , pair<int,int>> p = { 1, {3,4}} //Pair in a pair or nexted pair (pair is a datatype)
+          
+p.first         //1
+p.second.first  //3
+p.second.second //4
+
+pair<int,int> arr[] = { {1,2} , {2,5} , {5,1} }; //pair array
+
+arr[0].first  //1
+arr[0].second //2
+
+//Vectors
+
+*It is a container which is dynamic in nature , we can always modify it (unlike arrays)
+*We can always increase the size of the vector.
+
+vector<int> v;  //this is an empty container
+
+v.push_back(1);      //container takes in 1
+v.emplace_back(2);   //Inserts 2(dynamicaly increases the size)at the back (faster than push_back)
+
+vector <pair<int,int>> vec;
+
+vec.push_back({1,2});
+vec.emplace_back(1,2);  //No {} because emplace_back automatically assumes its a pair
+
+vector <int> v(5,100);  //{100,100,100,100,100}
+
+vector <int> v(5);      //{0,0,0,0,0} or any grabage value (depends on compiler)
+
+vector<int> v1(5,20);   //{20,20,20,20,20}
+vector<int> v2(v1);     //copies v1 to v2 => {20,20,20,20,20}
+
+* Even if after the size is declared we can push values in beyond the initial declared size 
+as the size would increase dynamicaly
+
+To access elements in a vector -> v[i] / v.at(i) (prefer v[i]);
+
+or
+
+Use an iterator 
+
+vector<int>::iterator it = v.begin(); //iterator points to the memory [v.begin() -> points to the first 
+                                        elements memory address]
+*it;  // the value can accessed using this
+it++; // to shift to the next element
+
+vector<int>::iterator it = v.end();  //This iterator will point to somewhere right after the lastElement
+
+vector<int>::iterator it = v.rend();
+//This iterator points to somewhere just before the array begins. (reverse end)
+
+vector<int>::iterator it = v.rbegin();
+//This iterator points to the last element in the array
+
+v.back(); //last element
+
+for(vector<int>::iterator it = v.begin(); it != v.end();it++){ //prints vector
+	std::cout<<*it<<" ";
+}
+
+for(auto it = v.begin();  it != v.end();it++){ //auto -> automatically assumes its a vector
+    std::cout<<*it<<" ";
+}
+
+for(auto it : v){         //for each loop. Here 'auto it' is 'int it' and every int in v is printed 
+	std::cout<<it<<" ";   //hence its not *it
+} 
+
+//Deletion in vector
+
+//{10,20,12,23}
+v.erase(v.begin()+1);  //{10,12,23}
+
+//{10,20,12,23,35}
+v.erase(v.begin() + 2, v.begin() + 4) //v.erase(start,end) end should be one after the element to be 
+                                       deleted. => {10,20,35}
+//Insert
+
+vector<int> v (2,100);         //{100,100}
+v.insert(v.begin(), 300);      //{300,100,100}
+v.insert(v.begin()+1 , 2, 10); //{300,10,10,100,100}
+
+vector<int> copy (2,50);                    //{50,50}
+v.insert(v.begin(),copy.begin(),copy.end()) //{50,50,300,10,10,100,100}
+
+cout<<v.size(); //prints size of vector ({2,3} then 2)
+
+//v1 = {10,20}
+//v2 = {30,40}
+v1.swap(v2);      // v1 = {30,40} and v2 = {10,20}
+
+v.clear();        //erases the entire vector
+ 
+cout<<v.empty();  //if empty return true else false
+
+*Insert function in a vector takes a lot of time
+
+//Lists
+
+list<int> ls;
+
+ls.push_back(2);    //{2}
+ls.emplace_back(4); //{2,4}
+
+ls.push_front(5);     //{5,2,4}
+ls.emplace_front(7);  //{7,5,2,4}
+
+*Rest of the functions are similar to vector
+
+//deque
+
+deque<int>dq;
+
+dq.push_back(1);
+dq.emplace_back(2);
+dq.push_front(1);
+dq.emplace_front(1);
+
+
+dq.pop_back();
+dq.pop_front();
+
+dq.back();
+dq.front();
+
+*Rest of the functions are similar to vector
+
+//Stack
+
+stack<int>st;
+
+st.push(1);
+st.push(2);
+st.push(3); 
+st.push(3);      //{3,3,2,1}
+st.emplace(5);   //{5,3,3,2,1}
+
+cout<<st.top();  //prints the first element
+//In stack indexing is not allowed, st[i] is invalid 
+
+st.pop();        //{3,3,2,1}
+st.size();       //4
+
+st.empty():      //if empty return true else false
+
+stack<int> st1,st2;
+st1.swap(st2);
+
+*All operations in stack are O(1)
+
+//Queue
+
+queue<int>q;
+q.push(2);
+q.emplace(3);
+q.back();      //points to last element
+q.back() += 5; //to update the last element etc etc
+q.front();     //points to first element
+
+q.pop();       //pops the first element
+
+//priority_queue
+*The largest stays at the top
+
+//Maximum heap in priority queue
+
+priority_queue<int> pq;
+
+pq.push(5);         //{5}
+pq.push(2);         //{5,2}
+pq.push(8);         //{8,5,2}
+pq.emplace(10);     //{10,8,5,2}
+
+pq.top():           //prints the largest element
+
+//Minimum heap in priority queue
+
+priority_queue<int ,vector<int>, greater<int>> pq;
+
+pq.push(5);         //{5}
+pq.push(2);         //{2,5}
+pq.push(8);         //{2,5,8}
+pq.emplace(10);     //{2,5,8,10}
+
+pq.top();           //prints the smallest element
+
+Time complexity in both cases - push - O(logn)
+                              - pop  - O(logn)
+                              - top  - O(1)
+//Set
+
+*Stores everything in a sorted order and stores unique values
+
+set<int> st;
+st.insert(1);    //{1}
+st.emplace(2);   //{1,2}
+st.insert(2)     //{1,2}
+st.insert(4)     //{1,2,4}
+st.insert(3)     //{1,2,3,4}
+
+auto it = st.find(3);  //returns an iterator that points to 3
+auto it = st.find(6);  //6 not in set hence returns st.end() or an it to an element next to last
+
+//{1,4,5}
+st.earse(5);           //deletes 5     
+
+int cnt = st.count(1); //if it exists will retun 1 (unique elements) else 0
+
+auto it1 = st.find(2);
+auto it2 = st.find(4);
+st.erase(it1,it2); //earses everything from 2(element not pos) to 4 (including the element in between)
+ 
+auto it = st.lower_bound(2); //returns an iterator pointing to the first element in the container that
+                               is less than or equal to 2
+                             //If there is no element in the container that matches the condition, it 
+                               returns an iterator to the end of the container.
+Eg:
+Vector contains : 10 20 30 30 30 40 50
+
+lower_bound for element 30 at position : 2
+lower_bound for element 35 at position : 5
+lower_bound for element 55 at position : 7
+
+auto it = st.upper_bound(3); //It returns an iterator pointing to the first element in the container 
+                               that is greater than the specified value 
+                             //If there is no element in the container that matches the condition, it 
+                               returns an iterator to the end of the container.
+Eg:
+Vector contains : 10 20 30 40 50
+
+upper_bound for element 35 is at position : 3
+upper_bound for element 45 is at position : 4
+
+*In Set everything happens in O(logn) time.
+
+//Multiset
+
+multiset<int>ms;
+ms.insert(1);
+ms.insert(1);
+ms.insert(1); //{1,1,1}
+ms.erase(1);  //all the 1's are erased
+
+ms.erase(ms.find(1));   //delete's the first 1
+
+//ms.erase(ms.find(1) , ms.find(1)+2); //deletes from first one to the second one; 
+
+* The above code doesnt work because sets dont do contiguous memory locations
+auto it = ms.find(1);
+advance(it, 2);         //it + 2
+
+ms.erase(ms.find(1),it);
+
+//unordered_set
+
+*Everything is similar to set but the order is randomised
+
+unordered_set<int> st;
+ 
+*All operations take O(1)
+*lower bound and upper bound operations dont work
+
+//Map
+
+*Key-value pairs
+           
+map<int,int> mp;
+   /key /value
+
+map<int, pair <int, int>> mp;
+
+map<pair <int, int>, int> mp;
+
+mp[1] = 2;  //internally it stores {{1,2}} , 1 key , 2 value
+or
+mp.emplace{{3,1}};  // 3key 1val
+mp.insert{{2,4}};   // 2key 4val
+
+*map stores unique keys in sorted order.
+Hence the above will be stored as: mp = {{1,2},{2,4}, {3,1}} 
+
+mp[{2,3}] = 1;   //{{2,3} , 10}
+                    /key    /value
+
+for(auto it : mp){
+	cout<< it.first <<" "<<it.second <<endl;
+}
+
+//{{1,2},{2,4}, {3,1}} 
+
+cout<< mp[1];           //prints 2
+
+auto it = mp.find(3);
+cout<<*(it).second;     //prints 1
+
+auto it = mp.find(5);   //return mp.end()
+
+//erase,swap,empty,size are same
+
+
+//Multimap
+
+*Same thing as map but we can store multiple keys
+*sorted
+
+//unorderedmap
+
+*Not sorted
+
+//sort
+
+sort(v.begin(), v.end());
+
+//{1,3,5,2}
+sort(a+2,a+4); //only sorts certain parts of the array
+
+sort(a, a+n , greater<int>); //sorts in descending order
+
+//Task
+
+pair<int,int> a[] = {{1,2},{2,1},{4,1}};
+
+//sort it according to second element
+//if second element is same, then
+//sort it according to first but in descending
+
+
+sort(a, a+n, comp);
+             
+bool comp(pair <int,int> p1, pair<int,int> p2){
+	if(p1.second < p2.second){
+	    return true;
+	}
+	else if ( p1.second == p2.second){
+	    if(p1.first > p2.first) return true;
+	}
+	return false;
+}
+
+int num = 7;
+int cnt = __builtin_popcount();  // 7 in binary is 111, it returns no.of 1's. Hence 3
+
+long long num = 7874581634691;
+int cnt = __builtin_popcountll();//if its long long
+
+string s = "123"; 
+
+do{
+	cout<<s<<endl;
+}while(next_permutation(s.begin(),s.end())); //prints all possible permus of 123 (123,132,213 etc)
+
+* If it was not sorted and s = "231" , then 312, 321 and after that it will return false. Hence 
+its important to sort before permutation
+                            /end it
+int max  = *max_element(a,a+n);
+                        / start it
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
