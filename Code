@@ -11,3 +11,344 @@ void sort_ascending (size_t length, int array[length])
 {
   qsort(array,length,sizeof(int),cmpfunc);
 }
+Sexy Codes
+
+//Create a function that accepts a string and a single character, and returns an integer of the count 
+  of occurrences the 2nd argument is found in the first one.
+
+  If no occurrences can be found, a count of 0 should be returned.
+
+	("Hello", "o")  ==>  1
+	("Hello", "l")  ==>  2
+	("", "z")       ==>  0
+
+sol:
+
+#include <stddef.h>
+
+size_t str_count(const char *str, char letter)
+{
+  int count = 0;
+  while (*str) count += *str++ == letter;
+  return count;
+}
+
+//When provided with a letter, return its position in the alphabet.
+
+ Input :: "a"
+
+ Ouput :: "Position of alphabet: 1"
+
+sol:
+
+#include <string.h>
+
+char* position(char alphabet)
+{
+	char *str;
+	asprintf(&str, "Position of alphabet: %d", alphabet - 'a' + 1);
+  return str;
+}
+
+reason it works:
+
+'a'-'a'=0 + 1 = 1
+'b'-'a'=1 + 1 = 2
+'c'-'a'=2 + 1 = 3
+
+//To find the length of any array 
+
+int n = sizeof(array) / sizeof(datatype ussed by that array);
+
+
+//Nearest square number
+
+#include <math.h>
+
+int nearest_sq(int n)
+{
+  double x = pow(n, 0.5);
+  n = floor(x);
+  if (ceil(x) - x < x - floor(x)) {
+    n = ceil(x);
+  }
+  return (int)pow(n, 2);
+}
+                   by: Attri kunal
+
+#include <math.h>
+
+int nearest_sq(int n)
+{
+  return pow(round(sqrt(n)), 2);
+}
+                  by:cw
+
+
+//#include<stdbool.h> - use this when type casting to bool ( int a = 1; bool b = (bool)a;)
+
+//strtol
+
+    char str[] = "1010";
+    char *endptr;
+    int num = strtol(str, &endptr, 2);
+
+*strtol takes 3 arguments first the string you want to convert to number then convert to the decimal 
+form of its base. Then an endpointer,  The value of endptr will be updated to point to the first 
+invalid character in the input string (in this case, the null terminator). Then the base to which we
+want to convert to.
+  
+We can also use it as: strtol(str, 0 ,2);
+Here we are telling it to not store the address of the first invalid character.
+
+//Binary Addition (add two unsigned ints and return binary in string)
+
+#include <malloc.h>
+#include <stdio.h>
+char *binary_add (unsigned a, unsigned b, char *binary)
+{
+ 
+  unsigned long long int sum = (unsigned long long int) a+(unsigned long long int)b;
+  int count = 0;
+  char * str = (char *) malloc(sizeof(char) * 500);
+  if ( sum == 0){
+    str[count++] = '0';
+  }
+  while(sum>0){
+    
+    if(sum%2 == 0){
+      str[count++] = '0';
+    }
+    else{
+      str[count++] = '1';
+    }
+    sum /= 2;  // sum>> = 1;
+  }
+  for (int i = 0; i < count; i++) {
+    binary[i] = str[count - 1 - i];
+  }
+   free(str); 
+  binary[count] = '\0';
+	return binary;
+}
+ - By KA
+
+//Largest pair sum in array 
+
+#include <stddef.h>
+#include <limits.h>
+long long largest_pair_sum (size_t length, const int numbers[length])
+{
+  long long a = numbers[0], b = numbers[1], s = 0;
+  for (int i = 2; i < (int)length; i++) {
+    if (numbers[i] > a) {
+      if (a > b) {
+        b = a;
+      }
+      a = numbers[i];
+    } else if (numbers[i] > b) {
+      if (b > a){
+        a = b;
+      }
+      b = numbers[i];
+    }
+  }
+  s = a + b;
+  return s;
+}
+
+//RGB to Hex conversion 
+
+
+#include <stdio.h>
+#include <malloc.h>
+void rgb (int r, int g, int b, char hex[6 + 1])
+{
+  
+//   int arr[] = {r,g,b};
+//   int val = 0;
+//   int rem = 0; 
+//   for(int i = 0 ; i<3 ;i++){
+//       rem = arr[i] % 16;
+//       val = arr[i] / 16;
+//       sprintf(hex + i * 2, "%X%X", val, rem);
+// //       sprintf(hex + i * 2, "%c%c", *(hex + i) , *(hex + i + 1));
+//   }
+    r = round(fmax(0, fmin(255, r)));
+    g = round(fmax(0, fmin(255, g)));
+    b = round(fmax(0, fmin(255, b)));
+    sprintf(hex, "%02X%02X%02X", r, g, b);
+
+  hex[6] = '\0';
+}
+
+//best solution from CW
+
+unsigned char wrap(int a)
+{
+   if(a>255) return 255;
+   else if(a<0) return 0;
+   else return a;
+}
+int rgb(int r, int g, int b, char *output)
+{
+   sprintf(output,"%02X%02X%02X\0",wrap(r),wrap(g),wrap(b));
+   return 0; 
+}
+
+//Quick sort in C
+
+int compare_ints(const void *a, const void *b) {
+  return abs(*((int *)a)) - abs(*((int *)b));
+}
+ // the other 'a' and this 'a' have no corelation 
+
+qsort (a, n, sizeof (int), compare_ints);
+a -> array
+n -> size of array
+sizeof (datatype of array);
+
+//Integer to Binary
+
+
+unsigned long long to_binary(unsigned short num)
+{
+    if (num == 0) return 0;
+    if (num == 1) return 1;                      
+    return (num % 2) + 10 * to_binary(num / 2);
+}
+ 
+int p = log10(num) + 1; //length of a integer of base10
+
+char *replace(const char *s)
+{
+    static const char vowels[] = "aeiouAEIOU";
+    char *r = strdup(s);        //allocate memory for the new string and copy the contents of the 
+                                  input string into it
+    for (char *pc = r; *pc; pc++) 
+        if ( strchr(vowels, *pc) ) // it searches for *pc in vowels and return true or false
+            *pc = '!';
+    return r;
+}
+
+//strstr - first occurance of a string
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char *str = "The quick brown fox jumps over the lazy dog";
+    char *substr = "brown";
+
+    char *result = strstr(str, substr); //result contains "brown fox jumps over the lazy dog"
+
+    if (result != NULL) {  //NULL if it is not found
+        printf("Substring found at index: %ld\n", result - str);
+    }
+    else {
+        printf("Substring not found\n");
+    }
+
+    return 0;
+}
+
+//Number from string
+ E.g: "hell5o wor6ld" -> 56
+ 
+#include <ctype.h>
+int get_number_from_string(const char *src) {
+  int result = 0;
+  for (int i = 0; src[i] != '\0'; i++) {
+      if (isdigit(src[i]))
+        result = result * 10 + (src[i] - '0');
+  }
+  return result;
+}
+
+//Code Optimisation in C++ (GCC)
+#pragma GCC optimize("O3") 
+
+//In C
+#pragma clang optimize on
+
+//Write a function that returns a string in which firstname is swapped with last name.
+"john McClane" --> "McClane john"
+
+code:
+
+char *name_shuffler (char *shuffled, const char *name)
+{
+  char first[100], second[100];   
+  sscanf(name, "%s %s", first, second);
+  sprintf(shuffled, "%s %s", second, first);
+  return shuffled;
+}
+
+//Binary Search in 2D Matrix
+
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int left = 0;
+        int right = m * n - 1;
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+            int midValue = matrix[mid / n][mid % n];
+
+            if (midValue == target) {
+                return true;
+            } else if (midValue < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return false;
+    }
+};
+
+
+int k = low + (high - low) / 2; // Use this to find middle element (more reliable)
+
+* To find ceil value of a/b if ceil is not working(somecases due to typecasting errors) use
+  (a + b - 1) /b. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
